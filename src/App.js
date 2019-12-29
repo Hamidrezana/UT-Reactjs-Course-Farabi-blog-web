@@ -4,6 +4,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { create } from 'jss';
 import rtl from 'jss-rtl';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+import MainApp from './pages';
 
 
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
@@ -16,7 +17,7 @@ function App() {
         <StylesProvider jss={jss}>
             <ThemeProvider theme={theme}>
                 <div className="App">
-                    Start Project
+                    <MainApp />
                 </div>
             </ThemeProvider>
         </StylesProvider>
