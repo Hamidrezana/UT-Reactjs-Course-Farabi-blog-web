@@ -26,6 +26,8 @@ body {
 
 .nav-link {
     color: #fff !important;
+    text-decoration: none !important;
+    margin: 0 15px;
 }
 
 .active {
