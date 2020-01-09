@@ -3,7 +3,7 @@ import Input from '../components/Input'
 import PageContainer from '../components/PageContainer';
 import Button from '../components/Button';
 import { mustFilled, email } from '../utils/Validations';
-import { register } from '../apis'
+import { register, setToken } from '../apis'
 import { connect } from 'react-redux'
 import {changeLoginStatus, changeUserInfo} from '../store/actions'
 import Strings from '../utils/Strings';
@@ -71,6 +71,7 @@ function RegisterPage(props) {
                     if (response.data.success) {
                         setTimeout(() => {
                             setLoading(false)
+                            setToken(response.data.token)
                             props.changeLoginStatus(true)
                             props.changeUserInfo(response.data.message)
                             props.history.push('/')

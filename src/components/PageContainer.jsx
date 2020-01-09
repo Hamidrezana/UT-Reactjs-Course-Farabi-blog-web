@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
-import { Container } from '@material-ui/core'
+import { Container, CircularProgress } from '@material-ui/core'
 import Strings from '../utils/Strings'
 import Message from './Message'
 
@@ -17,8 +17,14 @@ function PageContainer(props) {
             {
                 props.message ? <Message message={props.message} /> : null
             }
-            <h2>{Strings.title[props.title]}</h2>
-            {props.children}
+            {
+                props.loading ?
+                <CircularProgress size={50}/> :
+                <React.Fragment>
+                    <h2>{Strings.title[props.title]}</h2>
+                     {props.children}
+                </React.Fragment>
+            }
         </Container>
     )
 }

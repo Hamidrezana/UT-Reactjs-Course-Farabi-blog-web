@@ -2,16 +2,26 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import BlogCard from '../components/BlogCard'
 import PageContainer from '../components/PageContainer'
+import { connect } from 'react-redux'
 
-function HomePage() {
-    const blogs = [1, 2, 3]
+const mapStateToProps = state => {
+    return {
+        allBlogs: state.Blog.allBlogs,
+        loading: state.Blog.allBlogsLoading
+    }
+}
+
+
+function HomePage(props) {
+
     return (
         <PageContainer
             title='home'
+            loading={props.loading}
         >
             <Grid container spacing={2}>
                 {
-                    blogs.map((item, idx) =>
+                    props.allBlogs.map((item, idx) =>
                         <BlogCard key={idx}/>
                     )
                 }
@@ -20,4 +30,4 @@ function HomePage() {
     )
 }
 
-export default HomePage
+export default connect(mapStateToProps)(HomePage)

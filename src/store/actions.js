@@ -13,3 +13,31 @@ export function changeUserInfo(payload) {
         payload
     }
 }
+
+export function changeAllBlogs(payload) {
+    return{
+        type: ActionsTypes.CHANGE_ALL_BLOGS,
+        payload
+    }
+}
+
+export function changeUserBlogs(payload) {
+    return {
+        type: ActionsTypes.CHANGE_USER_BLOGS,
+        payload
+    }
+}
+
+export function changeAllBlogsLoading(payload) {
+    return {
+        type: ActionsTypes.CHANGE_ALL_BLOGS_LOADING,
+        payload
+    }
+}
+
+export function changeUserBlogsLoading(payload) {
+    return {
+        type: ActionsTypes.CHANGE_USER_BLOGS_LOADING,
+        payload
+    }
+}
