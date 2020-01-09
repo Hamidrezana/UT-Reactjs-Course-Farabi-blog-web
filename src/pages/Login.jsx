@@ -3,7 +3,13 @@ import Input from '../components/Input'
 import PageContainer from '../components/PageContainer';
 import Button from '../components/Button';
 import { mustFilled, email } from '../utils/Validations';
+import { login } from '../apis';
+import Strings from '../utils/Strings';
+import { connect } from 'react-redux'
+import {changeLoginStatus, changeUserInfo} from '../store/actions'
 
+
+const mapDispatchToProps = { changeLoginStatus, changeUserInfo }
 
 
 function LoginPage(props) {
@@ -22,6 +28,8 @@ function LoginPage(props) {
         password: ''
     })
     const [errors, setErrors] = useState({})
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState(null)
     const validation = (name) => {
         let hasError
         let newErrors = errors
@@ -46,12 +54,37 @@ function LoginPage(props) {
     const submit = () => {
         fields.map(({name}) => validation(name))
         if (Object.entries(errors).length !== 0 && errors.constructor === Object) return
-        else console.log(values)
+        else {
+            setLoading(true)
+            setMessage(null)
+            login(values)
+                .then(response => {
+                    if (response.data.success) {
+                        setTimeout(() => {
+                            setLoading(false)
+                            props.changeLoginStatus(true)
+                            props.changeUserInfo(response.data.message)
+                            props.history.push('/')
+                        }, 300)
+                    } else {
+                        setLoading(false)
+                        setMessage(response.data.message)
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    setLoading(false)
+                    setMessage(Strings.errors.problem)
+                })
+        }
     }
     const goToRegister = () => props.history.push('/register')
     const onBlur = (name) => validation(name)
     return (
-        <PageContainer>
+        <PageContainer
+            title='login'
+            message={message}
+        >
             <form>
                 {
                     fields.map(({name, ...props}, idx) =>
@@ -70,6 +103,7 @@ function LoginPage(props) {
                     <Button
                         onClick={submit}
                         text='login'
+                        loading={loading}
                     />
                     <Button
                         onClick={goToRegister}
@@ -81,4 +115,4 @@ function LoginPage(props) {
     )
 }
 
-export default LoginPage
+export default connect(null, mapDispatchToProps)(LoginPage)

@@ -3,8 +3,13 @@ import Input from '../components/Input'
 import PageContainer from '../components/PageContainer';
 import Button from '../components/Button';
 import { mustFilled, email } from '../utils/Validations';
+import { register } from '../apis'
+import { connect } from 'react-redux'
+import {changeLoginStatus, changeUserInfo} from '../store/actions'
+import Strings from '../utils/Strings';
 
 
+const mapDispatchToProps = { changeLoginStatus, changeUserInfo }
 
 function RegisterPage(props) {
     const fields = [
@@ -31,6 +36,8 @@ function RegisterPage(props) {
         email: '',
         password: ''
     })
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState(null)
     const [errors, setErrors] = useState({})
     const validation = (name) => {
         let hasError
@@ -56,12 +63,37 @@ function RegisterPage(props) {
     const submit = () => {
         fields.map(({name}) => validation(name))
         if (Object.entries(errors).length !== 0 && errors.constructor === Object) return
-        else console.log(values)
+        else {
+            setLoading(true)
+            setMessage(null)
+            register(values)
+                .then(response => {
+                    if (response.data.success) {
+                        setTimeout(() => {
+                            setLoading(false)
+                            props.changeLoginStatus(true)
+                            props.changeUserInfo(response.data.message)
+                            props.history.push('/')
+                        }, 300)
+                    } else {
+                        setLoading(false)
+                        setMessage(response.data.message)
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    setLoading(false)
+                    setMessage(Strings.errors.problem)
+                })
+        }
     }
     const goToLogin = () => props.history.push('/login')
     const onBlur = (name) => validation(name)
     return (
-        <PageContainer>
+        <PageContainer
+            title='register'
+            message={message}
+        >
             <form>
                 {
                     fields.map(({name, ...props}, idx) =>
@@ -78,6 +110,7 @@ function RegisterPage(props) {
                 }
                 <div className='flex-column'>
                     <Button
+                        loading={loading}
                         onClick={submit}
                         text='register'
                     />
@@ -91,4 +124,4 @@ function RegisterPage(props) {
     )
 }
 
-export default RegisterPage
+export default connect(null, mapDispatchToProps)(RegisterPage)

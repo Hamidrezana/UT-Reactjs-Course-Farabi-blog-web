@@ -7,7 +7,9 @@ export default {
     title: {
         userBlogs: 'بلاگ های شما',
         home: 'تمام بلاگ ها',
-        addNew: 'اضافه کردن'
+        addNew: 'اضافه کردن',
+        register: 'ثبت نام کاربر جدید',
+        login: 'ورود کاربران'
     },
     formText: {
         title: 'عنوان',
