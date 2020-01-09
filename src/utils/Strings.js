@@ -19,7 +19,7 @@ export default {
     },
     btns: {
         submit: 'ثبت',
-        edit: 'ویرایش',
+        more: 'بیشتر',
         login: 'ورود',
         register: 'ثبت نام'
     },

@@ -1,10 +1,22 @@
 import React from 'react'
+import { Grid } from '@material-ui/core'
+import BlogCard from '../components/BlogCard'
+import PageContainer from '../components/PageContainer'
 
 function HomePage() {
+    const blogs = [1, 2, 3]
     return (
-        <div>
-            <h1>Home Page</h1>
-        </div>
+        <PageContainer
+            title='home'
+        >
+            <Grid container spacing={2}>
+                {
+                    blogs.map((item, idx) =>
+                        <BlogCard key={idx}/>
+                    )
+                }
+            </Grid>
+        </PageContainer>
     )
 }
 
