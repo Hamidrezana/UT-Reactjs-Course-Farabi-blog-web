@@ -3,6 +3,13 @@ import { Link, withRouter } from 'react-router-dom'
 import { AppBar, Toolbar, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import Strings from '../utils/Strings'
+import { connect } from 'react-redux'
+
+const mapStateToProps = state => {
+    return {
+        userInfo: state.User.userInfo
+    }
+}
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -30,11 +37,11 @@ function Header(props) {
                 <Link className={`nav-link ${isHomePage ? 'active' : ''}`} to='/'>{Strings.header.homeLink}</Link>
                 <Link className={`nav-link ${isUserBlogsPage ? 'active' : ''}`} to='/user/blogs'>{Strings.header.myBlogsLink}</Link>
                 <div className={classes.username}>
-                    <span>hamidreza nazemi</span>
+                    <span>{props.userInfo.firstName + ' ' + props.userInfo.lastName}</span>
                 </div>
             </Toolbar>
         </AppBar>
     )
 }
 
-export default withRouter(Header)
+export default withRouter(connect(mapStateToProps)(Header))

@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, Typography, CardActions, Button, Grid } from '@material-ui/core';
 import Strings from '../utils/Strings';
@@ -25,7 +26,7 @@ const useStyles = makeStyles({
     }
 });
 
-function BlogCard() {
+function BlogCard(props) {
     const classes = useStyles()
     return (
         <Grid item xs={12} md={6} lg={4}>
@@ -41,7 +42,7 @@ function BlogCard() {
                 <CardActions>
                     <div className={classes.cardFooter}>
                         <span>حمید ناظمی</span>
-                        <Button size="small">{Strings.btns.more}</Button>
+                        <Button onClick={() => props.history.push('blog/1')} size="small">{Strings.btns.more}</Button>
                     </div>
                 </CardActions>
             </Card>
@@ -49,4 +50,4 @@ function BlogCard() {
     )
 }
 
-export default BlogCard
+export default withRouter(BlogCard)

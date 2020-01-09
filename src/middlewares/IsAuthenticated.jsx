@@ -1,9 +1,15 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-const isAuthenticated = false
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.User.isLogin
+    }
+}
 
 function IsAuthenticated({component: Component, ...props}) {
+    const { isAuthenticated } = props
     return (
         <Route
             render={(props) => (
@@ -21,4 +27,4 @@ function IsAuthenticated({component: Component, ...props}) {
     )
 }
 
-export default IsAuthenticated
+export default connect(mapStateToProps)(IsAuthenticated)

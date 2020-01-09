@@ -7,6 +7,7 @@ import Header from '../components/Header'
 import UserBlogsPage from './user/UserBlogs'
 import PrivateRoute from '../middlewares/PrivateRoute'
 import IsAuthenticated from '../middlewares/IsAuthenticated'
+import BlogPage from './Blog'
 
 function MainApp() {
     return (
@@ -15,6 +16,7 @@ function MainApp() {
             <Switch>
                 <PrivateRoute exact path='/' component={HomePage}/>
                 <PrivateRoute exact path='/user/blogs' component={UserBlogsPage}/>
+                <PrivateRoute exact path='/blog/:id' component={BlogPage}/>
                 <IsAuthenticated exact path='/register' component={RegisterPage} />
                 <IsAuthenticated exact path='/login' component={LoginPage} />
             </Switch>
