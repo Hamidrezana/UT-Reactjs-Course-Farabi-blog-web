@@ -29,5 +29,8 @@ export default {
         mustFilled: 'این فیلد اجباری است.',
         inValid: 'مقدار وارد شده نامعتبر است.',
         problem: 'مشکلی پیش آمده است.'
+    },
+    messages: {
+        successfullyAdded: 'با موفقیت ثبت شد.'
     }
 }

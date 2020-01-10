@@ -1,31 +1,29 @@
 import React, {useState} from 'react'
-import Input from '../components/Input'
-import PageContainer from '../components/PageContainer';
-import Button from '../components/Button';
-import { mustFilled, email } from '../utils/Validations';
-import { login, setToken } from '../apis';
-import Strings from '../utils/Strings';
+import PageContainer from '../../components/PageContainer'
+import { mustFilled } from '../../utils/Validations'
+import Button from '../../components/Button'
+import Input from '../../components/Input'
+import { addBlog } from '../../apis'
+import Strings from '../../utils/Strings'
 import { connect } from 'react-redux'
-import {changeLoginStatus, changeUserInfo} from '../store/actions'
+import { changeReloadBlogs } from '../../store/actions'
 
+const mapDispatchToProps = { changeReloadBlogs }
 
-const mapDispatchToProps = { changeLoginStatus, changeUserInfo }
-
-
-function LoginPage(props) {
+function AddPost(props) {
     const fields = [
         {
-            name: 'email',
-            type: 'email'
+            name: 'title',
         },
         {
-            name: 'password',
-            type: 'password'
+            name: 'description',
+            multiline: true,
+            rows: 3
         }
     ]
     const [values, setValues] = useState({
-        email: '',
-        password: ''
+        title: '',
+        description: ''
     })
     const [errors, setErrors] = useState({})
     const [loading, setLoading] = useState(false)
@@ -33,11 +31,7 @@ function LoginPage(props) {
     const validation = (name) => {
         let hasError
         let newErrors = errors
-        if(name === 'email') {
-            hasError = email(values[name])
-        } else {
-            hasError = mustFilled(values[name])
-        }
+        hasError = mustFilled(values[name])
         if(hasError)
             newErrors[name] = hasError
         else
@@ -57,15 +51,16 @@ function LoginPage(props) {
         else {
             setLoading(true)
             setMessage(null)
-            login(values)
+            addBlog(values)
                 .then(response => {
                     if (response.data.success) {
                         setTimeout(() => {
                             setLoading(false)
-                            setToken(response.data.token)
-                            props.changeLoginStatus(true)
-                            props.changeUserInfo(response.data.message)
-                            props.history.push('/')
+                            setMessage({
+                                type: 'success',
+                                message: Strings.messages.successfullyAdded
+                            })
+                            props.changeReloadBlogs()
                         }, 300)
                     } else {
                         setLoading(false)
@@ -85,11 +80,9 @@ function LoginPage(props) {
                 })
         }
     }
-    const goToRegister = () => props.history.push('/register')
     const onBlur = (name) => validation(name)
     return (
         <PageContainer
-            title='login'
             message={message}
         >
             <form>
@@ -109,12 +102,8 @@ function LoginPage(props) {
                 <div className='flex-column'>
                     <Button
                         onClick={submit}
-                        text='login'
+                        text='submit'
                         loading={loading}
-                    />
-                    <Button
-                        onClick={goToRegister}
-                        text='register'
                     />
                 </div>
             </form>
@@ -122,4 +111,4 @@ function LoginPage(props) {
     )
 }
 
-export default connect(null, mapDispatchToProps)(LoginPage)
+export default connect(null, mapDispatchToProps)(AddPost)

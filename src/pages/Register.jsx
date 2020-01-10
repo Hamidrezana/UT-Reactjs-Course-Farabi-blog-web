@@ -78,13 +78,19 @@ function RegisterPage(props) {
                         }, 300)
                     } else {
                         setLoading(false)
-                        setMessage(response.data.message)
+                        setMessage({
+                            type: 'error',
+                            message: response.data.message
+                        })
                     }
                 })
                 .catch(err => {
                     console.log(err)
                     setLoading(false)
-                    setMessage(Strings.errors.problem)
+                    setMessage({
+                        type: 'error',
+                        message: Strings.errors.problem
+                    })
                 })
         }
     }

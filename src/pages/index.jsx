@@ -11,11 +11,13 @@ import BlogPage from './Blog'
 import { connect } from 'react-redux'
 import { getBlogs, getUserBlogs } from '../apis'
 import { changeAllBlogs, changeUserBlogs, changeAllBlogsLoading, changeUserBlogsLoading } from '../store/actions'
+import AddPost from './user/AddPost'
 
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.User.isLogin
+        isAuthenticated: state.User.isLogin,
+        reload: state.Blog.reloadBlogs
     }
 }
 
@@ -48,13 +50,14 @@ function MainApp(props) {
                 })
                 .finally(() => setTimeout(() => props.changeUserBlogsLoading(false), 500))
         }
-    }, [props.isAuthenticated])
+    }, [props.isAuthenticated, props.reload])
     return (
         <Router>
             <Header />
             <Switch>
                 <PrivateRoute exact path='/' component={HomePage}/>
                 <PrivateRoute exact path='/user/blogs' component={UserBlogsPage}/>
+                <PrivateRoute exact path='/user/add' component={AddPost}/>
                 <PrivateRoute exact path='/blog/:id' component={BlogPage}/>
                 <IsAuthenticated exact path='/register' component={RegisterPage} />
                 <IsAuthenticated exact path='/login' component={LoginPage} />

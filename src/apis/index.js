@@ -21,3 +21,8 @@ export const login = userInfo => axiosAgent.post('/auth/login', {
 export const getBlogs = () => axiosAgent.get('/blog/posts')
 
 export const getUserBlogs = () => axiosAgent.post('/user/blogs')
+
+export const addBlog = (blogInfo) => axiosAgent.post('/blog/add', {
+    title: blogInfo.title,
+    text: blogInfo.description
+})

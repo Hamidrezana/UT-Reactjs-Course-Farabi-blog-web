@@ -41,3 +41,9 @@ export function changeUserBlogsLoading(payload) {
         payload
     }
 }
+
+export function changeReloadBlogs() {
+    return {
+        type: ActionsTypes.CHANGE_REALOAD_BLOGS
+    }
+}

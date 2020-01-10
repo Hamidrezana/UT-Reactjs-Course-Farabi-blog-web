@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     allBlogs: [],
     userBlogs: [],
     allBlogsLoading: false,
-    userBlogsLoading: true
+    userBlogsLoading: false,
+    reloadBlogs: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -24,6 +25,10 @@ export default (state = INITIAL_STATE, action) => {
         case ActionsTypes.CHANGE_USER_BLOGS_LOADING:
             return Object.assign({}, state, {
                 userBlogsLoading: action.payload
+            })
+        case ActionsTypes.CHANGE_REALOAD_BLOGS:
+            return Object.assign({}, state, {
+                reloadBlogs: !state.reloadBlogs
             })
         default:
             return state
