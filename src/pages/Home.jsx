@@ -22,7 +22,7 @@ function HomePage(props) {
             <Grid container spacing={2}>
                 {
                     props.allBlogs.map((item, idx) =>
-                        <BlogCard key={idx}/>
+                        <BlogCard fromHomePage blog={item} key={idx}/>
                     )
                 }
             </Grid>

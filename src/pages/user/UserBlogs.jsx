@@ -19,7 +19,7 @@ function UserBlogsPage(props) {
             <Grid container spacing={2}>
                 {
                     props.userBlogs.map((item, idx) =>
-                        <BlogCard key={idx}/>
+                        <BlogCard blog={item} key={idx}/>
                     )
                 }
             </Grid>

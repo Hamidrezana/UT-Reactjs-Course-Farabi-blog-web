@@ -16,6 +16,9 @@ const useStyles = makeStyles({
     title: {
         fontSize: 14,
     },
+    bodyText: {
+        fontSize: 18
+    },
     pos: {
         marginBottom: 12,
     },
@@ -28,21 +31,24 @@ const useStyles = makeStyles({
 
 function BlogCard(props) {
     const classes = useStyles()
+    const {blog: {id, title, text, user}, fromHomePage} = props
     return (
         <Grid item xs={12} md={6} lg={4}>
             <Card className={classes.card}>
                 <CardContent>
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
-                        Word of the Day
+                        {title}
                     </Typography>
-                    <Typography variant="body2" component="p">
-                        well meaning and kindly.
+                    <Typography className={classes.bodyText} variant="body2" component="p">
+                        {text}
                     </Typography>
                 </CardContent>
                 <CardActions>
                     <div className={classes.cardFooter}>
-                        <span>حمید ناظمی</span>
-                        <Button onClick={() => props.history.push('blog/1')} size="small">{Strings.btns.more}</Button>
+                        {
+                            fromHomePage ? <span>{user.firstName + ' ' + user.lastName}</span> : null
+                        }
+                        <Button onClick={() => props.history.push(`/blog/${id}`)} size="small">{Strings.btns.more}</Button>
                     </div>
                 </CardActions>
             </Card>
