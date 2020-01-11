@@ -50,7 +50,7 @@ function MainApp(props) {
                 })
                 .finally(() => setTimeout(() => props.changeUserBlogsLoading(false), 500))
         }
-    }, [props.isAuthenticated, props.reload])
+    }, [props])
     return (
         <Router>
             <Header />

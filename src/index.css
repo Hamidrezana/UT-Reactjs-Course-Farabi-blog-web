@@ -33,3 +33,7 @@ body {
 .active {
     transform: scale(1.5)
 }
+
+.m-link {
+    color: #007bff!important;
+}
